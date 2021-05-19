@@ -42,6 +42,7 @@ export function  Account() {
     const [ isPixCpfWrong, setIsPixCpfWrong ] = useState(false);
     const [ isTicketWrong, setIsTicketWrong ] = useState(false);
     const [ isNotMoneyEnough, setIsNotMoneyEnough ] = useState(false);
+    const [ isNegative, setIsNegative ] = useState(false);
     const [ transactionType, setTransactionType ] = useState('');
     const [ transactionName, setTransactionName ] = useState('');
     const [ step, setStep ] = useState(1);
@@ -65,6 +66,7 @@ export function  Account() {
         setIsPixCpfWrong(false)
         setPixDestination('')
         setIsNotMoneyEnough(false)
+        setIsNegative(false)
         setTicket('')
     }
 
@@ -158,8 +160,10 @@ export function  Account() {
             return acc;
         },{
             total: 0,
-        })  
-        if(transactionType==='withdraw' && summary.total<amount){
+        })
+        if(amount<0){
+            setIsNegative(true)
+        }else if(transactionType==='withdraw' && summary.total<amount){
             setIsNotMoneyEnough(true)
         }else{
             if(password===currentAccount.password){
@@ -380,11 +384,14 @@ export function  Account() {
                                         <h2>Fazer {type}</h2>
                                         <input placeholder="Nome da operação" onChange={(e) => setTransactionName(e.target.value)} required/>
                                         {type!=='pagamento' && (
-                                            <input placeholder="Valor a ser movimentado" type="number" onChange={(e) => {setAmount(Number(e.target.value)); setIsNotMoneyEnough(false)}} required/>
+                                            <input placeholder="Valor a ser movimentado" type="number" onChange={(e) => {setAmount(Number(e.target.value)); setIsNotMoneyEnough(false);setIsNegative(false)}} required/>
                                         )}
                                         {type==='pagamento' && (
                                             <input placeholder={isTicketWrong? "Boleto inválido" :"Digite o número do boleto"} value={ticket} type="number" className="boleto" onChange={(e) => {setTicket(e.target.value); setIsTicketWrong(false)}} required/>
                                         )}                                        
+                                        {isNegative && (
+                                            <h3>Não são permitidas operações com valores negativos</h3>
+                                        )}
                                         {isNotMoneyEnough && (
                                             <h3>Saldo insuficiente! Valor disponível na conta: R$ {summary.total}</h3>
                                         )}

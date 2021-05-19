@@ -76,14 +76,14 @@ export const Data = () => ([
         transactions : [
             {
                 title: 'Aluguel',
-                amount: 27,
+                amount: 2000,
                 type: 'withdraw',
                 category: 'Cobrança',
                 createdAt: new Date('2021-05-17 09:01:03'),
             },
             {
                 title: 'Salário',
-                amount: 1800,
+                amount: 3400,
                 type: 'deposit',
                 category: 'salário',
                 createdAt: new Date('2021-05-04 09:01:03'),

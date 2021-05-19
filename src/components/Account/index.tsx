@@ -84,6 +84,7 @@ export function  Account() {
                 setStep(2);
                 setPassword('')
                 setIsPasswordWrong(false)
+                setType('')
             }else{
                 setIsPasswordWrong(true)
                 setPassword('')
@@ -266,9 +267,8 @@ export function  Account() {
                         )
                     })
                 }
-                setTimeout(handleCloseTransactionModal, 3000);
             }
-        }
+        }setTimeout(handleCloseTransactionModal, 3000);
     }
 
     if(step===1){
@@ -427,21 +427,36 @@ export function  Account() {
                                 <p>Entradas</p>
                                 <img src={incomeImg} alt="Entradas"/>
                             </header>
-                            <strong>{summary.deposits}</strong>
+                            <strong>
+                                {new Intl.NumberFormat('pt-BR',{
+                                    style: 'currency',
+                                    currency: 'BRL'
+                                }).format(summary.deposits)}
+                            </strong>
                         </div>
                         <div>
                             <header>
                                 <p>Saídas</p>
                                 <img src={outcomeImg} alt="Saídas"/>
                             </header>
-                            <strong>- {summary.withdraws}</strong>
+                            <strong>- 
+                                {new Intl.NumberFormat('pt-BR',{
+                                    style: 'currency',
+                                    currency: 'BRL'
+                                }).format(summary.withdraws)}
+                            </strong>
                         </div>
                         <div className="highlight-background">
                             <header>
-                                <p>Total</p>
+                                <p>Saldo Total</p>
                                 <img src={totalImg} alt="Total"/>
                             </header>
-                            <strong>{summary.total}</strong>
+                            <strong>
+                                {new Intl.NumberFormat('pt-BR',{
+                                    style: 'currency',
+                                    currency: 'BRL'
+                                }).format(summary.total)}
+                            </strong>
                         </div>
                     </SummaryContainer>
                     <TransactionTableContainer>
